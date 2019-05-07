@@ -50,8 +50,6 @@ $app->delete('[/]', function (Request $request, Response $response) {
 
 });
 
-
-
 $app->get('/datos/', function (Request $request, Response $response) {     
     $datos = array('nombre' => 'rogelio','apellido' => 'agua', 'edad' => 40);
     $newResponse = $response->withJson($datos, 200);  

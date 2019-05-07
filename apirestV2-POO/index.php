@@ -4,7 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../composer/vendor/autoload.php';
 require '/clases/AccesoDatos.php';
-require '/clases/cdApi.php';
+require '/clases/usuarioApi.php';
 
 
 $config['displayErrorDetails'] = true;
@@ -24,17 +24,17 @@ desarrollo para obtener información sobre los errores
 $app = new \Slim\App(["settings" => $config]);
 
 /*LLAMADA A METODOS DE INSTANCIA DE UNA CLASE*/
-$app->group('/cd', function () {
+$app->group('/usuario', function () {
+  
+  $this->get('/', \usuarioApi::class . ':traerTodos');
  
-  $this->get('/', \cdApi::class . ':traerTodos');
- 
-  $this->get('/{id}', \cdApi::class . ':traerUno');
+  $this->get('/{id}', \usuarioApi::class . ':traerUno');
 
-  $this->post('/', \cdApi::class . ':CargarUno');
+  $this->post('/', \usuarioApi::class . ':CargarUno');
 
-  $this->delete('/', \cdApi::class . ':BorrarUno');
+  $this->delete('/', \usuarioApi::class . ':BorrarUno');
 
-  $this->put('/', \cdApi::class . ':ModificarUno');
+  $this->put('/', \usuarioApi::class . ':ModificarUno');
      
 });
 

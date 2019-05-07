@@ -1,128 +1,122 @@
 <?php
-class cd
+class usuario
 {
 	public $id;
- 	public $titulo;
-  	public $cantante;
-  	public $año;
+ 	public $nombre;
+  	public $password;
 
 
 
-  	public function BorrarCd()
+  	public function BorrarUsuario()
 	 {
 	 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("
-				delete 
-				from cds 				
-				WHERE id=:id");	
+			echo "AAAA";
+			 $consulta =$objetoAccesoDato->RetornarConsulta("
+			 delete
+			 from usuario
+			 WHERE id=:id");	
 				$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);		
 				$consulta->execute();
 				return $consulta->rowCount();
 	 }
 
-	public static function BorrarCdPorAnio($año)
+	public static function BorrarUsuarioPorAnio($año)
 	 {
 
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				delete 
 				from cds 				
-				WHERE jahr=:anio");	
-				$consulta->bindValue(':anio',$año, PDO::PARAM_INT);		
+				WHERE id=:id");	
+				$consulta->bindValue(':id',$año, PDO::PARAM_INT);		
 				$consulta->execute();
 				return $consulta->rowCount();
 
 	 }
-	public function ModificarCd()
+	public function ModificarUsuario()
 	 {
 
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				update cds 
-				set titel='$this->titulo',
-				interpret='$this->cantante',
-				jahr='$this->año'
+				set nombre='$this->nombre',
+				password='$this->password'
 				WHERE id='$this->id'");
 			return $consulta->execute();
 
 	 }
 	
   
-	 public function InsertarElCd()
+	 public function InsertarElUsuario()
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into cds (titel,interpret,jahr)values('$this->titulo','$this->cantante','$this->año')");
+				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuario (id,nombre,password)values('$this->id','$this->nombre','$this->password')");
 				$consulta->execute();
 				return $objetoAccesoDato->RetornarUltimoIdInsertado();
-				
-
 	 }
 
-	  public function ModificarCdParametros()
+	  public function ModificarUsuarioParametros()
 	 {
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
-				update cds 
-				set titel=:titulo,
-				interpret=:cantante,
-				jahr=:anio
+				update usuario 
+				set nombre=:nombre,
+				password=:password
 				WHERE id=:id");
 			$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);
-			$consulta->bindValue(':titulo',$this->titulo, PDO::PARAM_INT);
-			$consulta->bindValue(':anio', $this->año, PDO::PARAM_STR);
-			$consulta->bindValue(':cantante', $this->cantante, PDO::PARAM_STR);
+			$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_INT);
+			$consulta->bindValue(':password', $this->password, PDO::PARAM_STR);
 			return $consulta->execute();
 	 }
 
-	 public function InsertarElCdParametros()
+	 public function InsertarElUsuarioParametros()
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into cds (titel,interpret,jahr)values(:titulo,:cantante,:anio)");
-				$consulta->bindValue(':titulo',$this->titulo, PDO::PARAM_INT);
-				$consulta->bindValue(':anio', $this->año, PDO::PARAM_STR);
-				$consulta->bindValue(':cantante', $this->cantante, PDO::PARAM_STR);
+				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuario (id,nombre,password)values(:id,:nombre,:password)");
+				$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);
+				$consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
+				$consulta->bindValue(':password', $this->password, PDO::PARAM_STR);
 				$consulta->execute();		
 				return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	 }
-	 public function GuardarCD()
+	 public function GuardarUsuario()
 	 {
 
 	 	if($this->id>0)
 	 		{
-	 			$this->ModificarCdParametros();
+	 			$this->ModificarUsuarioParametros();
 	 		}else {
-	 			$this->InsertarElCdParametros();
+	 			$this->InsertarElUsuarioParametros();
 	 		}
 
 	 }
 
-
-  	public static function TraerTodoLosCds()
+  	public static function TraerTodoLosUsuarios()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,titel as titulo, interpret as cantante,jahr as año from cds");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre,password from usuario");
 			$consulta->execute();			
-			return $consulta->fetchAll(PDO::FETCH_CLASS, "cd");		
+			return $consulta->fetchAll(PDO::FETCH_CLASS, "usuario");		
 	}
 
-	public static function TraerUnCd($id) 
+	public static function TraerUnUsuario($id) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id, titel as titulo, interpret as cantante,jahr as año from cds where id = $id");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre,password from usuario where id = $id");
 			$consulta->execute();
-			$cdBuscado= $consulta->fetchObject('cd');
-			return $cdBuscado;				
+			$usuarioBuscado= $consulta->fetchObject('usuario');
+			return $usuarioBuscado;				
 
 			
 	}
 
-	public static function TraerUnCdAnio($id,$anio) 
+	/*public static function TraerUnCdAnio($id,$anio) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("select  titel as titulo, interpret as cantante,jahr as año from cds  WHERE id=? AND jahr=?");
 			$consulta->execute(array($id, $anio));
-			$cdBuscado= $consulta->fetchObject('cd');
-      		return $cdBuscado;				
+			$usuarioBuscado= $consulta->fetchObject('usuario');
+      		return $usuarioBuscado;				
 
 			
 	}
@@ -134,8 +128,8 @@ class cd
 			$consulta->bindValue(':id', $id, PDO::PARAM_INT);
 			$consulta->bindValue(':anio', $anio, PDO::PARAM_STR);
 			$consulta->execute();
-			$cdBuscado= $consulta->fetchObject('cd');
-      		return $cdBuscado;				
+			$usuarioBuscado= $consulta->fetchObject('cd');
+      		return $usuarioBuscado;				
 
 			
 	}
@@ -146,15 +140,15 @@ class cd
 			$consulta =$objetoAccesoDato->RetornarConsulta("select  titel as titulo, interpret as cantante,jahr as año from cds  WHERE id=:id AND jahr=:anio");
 			$consulta->execute(array(':id'=> $id,':anio'=> $anio));
 			$consulta->execute();
-			$cdBuscado= $consulta->fetchObject('cd');
-      		return $cdBuscado;				
+			$usuarioBuscado= $consulta->fetchObject('cd');
+      		return $usuarioBuscado;				
 
 			
-	}
+	}*/
 
 	public function mostrarDatos()
 	{
-	  	return "Metodo mostar:".$this->titulo."  ".$this->cantante."  ".$this->año;
+	  	return "Metodo mostar:".$this->id."  ".$this->nombre."  ".$this->password;
 	}
 
 }

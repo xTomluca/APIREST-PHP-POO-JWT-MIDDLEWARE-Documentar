@@ -15,6 +15,10 @@ $app->get('[/]', function (Request $request, Response $response) {
     return $response;
 
 });
+$app->post('[/]', function (Request $request, Response $response) {    
+    $response->getBody()->write("POST => Bienvenido!!! ,a SlimFramework");
+    return $response;
 
+});
 
 $app->run();
