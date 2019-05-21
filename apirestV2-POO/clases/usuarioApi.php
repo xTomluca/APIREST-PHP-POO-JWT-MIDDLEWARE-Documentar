@@ -45,7 +45,7 @@ class usuarioApi extends usuario implements IApiUsable
     }
       public function BorrarUno($request, $response, $args) {
      	$ArrayDeParametros = $request->getParsedBody();
-     	$id=$ArrayDeParametros['id'];
+		$id=$ArrayDeParametros['id'];
      	$cd= new usuario();
      	$cd->id=$id;
      	$cantidadDeBorrados=$cd->BorrarUsuario();
@@ -72,7 +72,7 @@ class usuarioApi extends usuario implements IApiUsable
 	    $miUsuario->id=$ArrayDeParametros['id'];
 	    $miUsuario->nombre=$ArrayDeParametros['nombre'];
 	    $miUsuario->password=$ArrayDeParametros['password'];
-
+		
 	   	$resultado =$miUsuario->ModificarUsuarioParametros();
 	   	$objDelaRespuesta= new stdclass();
 		//var_dump($resultado);

@@ -9,8 +9,7 @@ class usuario
 
   	public function BorrarUsuario()
 	 {
-	 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			echo "AAAA";
+	 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 			 $consulta =$objetoAccesoDato->RetornarConsulta("
 			 delete
 			 from usuario
